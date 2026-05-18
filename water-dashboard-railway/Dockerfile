@@ -1,5 +1,11 @@
 FROM php:8.2-apache
 
+# Fix "More than one MPM loaded" error: edit apache2.conf directly so only
+# mpm_prefork is loaded before any a2dismod/a2enmod commands run.
+RUN sed -i 's/^LoadModule mpm_event_module/# LoadModule mpm_event_module/' /etc/apache2/apache2.conf && \
+    sed -i 's/^LoadModule mpm_worker_module/# LoadModule mpm_worker_module/' /etc/apache2/apache2.conf && \
+    sed -i 's/^# LoadModule mpm_prefork_module/LoadModule mpm_prefork_module/' /etc/apache2/apache2.conf
+
 # Ensure only mpm_prefork is active (mod_php is incompatible with mpm_event/mpm_worker)
 RUN a2dismod mpm_event mpm_worker 2>/dev/null || true \
     && a2enmod mpm_prefork
