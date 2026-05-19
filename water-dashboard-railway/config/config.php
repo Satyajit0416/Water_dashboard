@@ -6,7 +6,7 @@
 // Application Settings
 define('APP_NAME', 'Water Dashboard');
 define('APP_VERSION', '1.0.0');
-define('APP_URL', getenv('APP_URL') ?: 'http://localhost');
+$_detected_url = getenv('APP_URL'); if (!$_detected_url) {     $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';     $host   = $_SERVER['HTTP_HOST'] ?? 'localhost';     $_detected_url = $scheme . '://' . $host; } define('APP_URL', rtrim($_detected_url, '/'));
 define('BASE_PATH', dirname(__DIR__));
 
 // Database Configuration — reads from Railway environment variables
