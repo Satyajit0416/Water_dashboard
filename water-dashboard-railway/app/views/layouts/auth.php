@@ -9,8 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="<?= APP_URL ?>/css/style.css" rel="stylesheet">
 </head>
-<body class="auth-body">
-
+<body class="auth-body" style="overflow-y: auto; min-height: 100vh;">
     <!-- Animated background -->
     <div class="auth-bg">
         <div class="water-wave wave1"></div>
@@ -24,7 +23,7 @@
     </div>
 
     <!-- Auth Container -->
-    <div class="auth-container">
+    <div class="auth-container" style="overflow-y: auto; padding: 20px 0;">
         <div class="auth-brand">
             <div class="auth-logo"><i class="fas fa-tint"></i></div>
             <h1 class="auth-title">AquaFarm</h1>
