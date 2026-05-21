@@ -12,7 +12,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="<?= APP_URL ?>/../public/css/style.css" rel="stylesheet">
+    <link href="<?= APP_URL ?>/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -151,6 +151,6 @@
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="<?= APP_URL ?>/../public/js/main.js"></script>
+<script src="<?= APP_URL ?>/js/main.js"></script>
 </body>
 </html>
