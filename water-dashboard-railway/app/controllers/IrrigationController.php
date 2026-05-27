@@ -52,7 +52,19 @@ class IrrigationController extends Controller {
     public function updateStatus($id) {
         $this->requireFarmer();
 
-        $irrigModel = $this->model('IrrigationModel');
+        $farmerModel = $this->model('FarmerModel');
+        $irrigModel  = $this->model('IrrigationModel');
+        $farmer      = $farmerModel->getByUserId($_SESSION['user_id']);
+
+        $schedule = $irrigModel->findById($id);
+        if (!$schedule || $schedule['farmer_id'] !== $farmer['id']) {
+            if ($this->isAjax()) {
+                $this->json(['success' => false, 'error' => 'Forbidden'], 403);
+            }
+            $this->setFlash(ALERT_DANGER, 'Access denied.');
+            $this->redirect('irrigation');
+        }
+
         $status = $this->getPost('status');
         $irrigModel->updateStatus($id, $status);
 

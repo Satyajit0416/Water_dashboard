@@ -55,9 +55,15 @@ class WaterUsageModel extends Model {
         );
     }
 
-    // Get total usage system-wide
-    public function getTotalUsage() {
-        return $this->db->fetchColumn("SELECT COALESCE(SUM(amount_used), 0) FROM water_usage");
+    // Get total usage — scoped to a farmer when $farmerId is provided, system-wide otherwise
+    public function getTotalUsage($farmerId = null) {
+        $sql = "SELECT COALESCE(SUM(amount_used), 0) FROM water_usage";
+        $params = [];
+        if ($farmerId) {
+            $sql .= " WHERE farmer_id = ?";
+            $params[] = $farmerId;
+        }
+        return $this->db->fetchColumn($sql, $params);
     }
 
     // Get this month's usage

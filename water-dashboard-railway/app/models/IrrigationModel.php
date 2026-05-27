@@ -19,6 +19,13 @@ class IrrigationModel extends Model {
         return $this->db->fetchAll($sql, [$farmerId]);
     }
 
+    // Find a single schedule by ID
+    public function findById($id) {
+        return $this->db->fetch(
+            "SELECT * FROM irrigation_schedule WHERE id = ?", [$id]
+        );
+    }
+
     // Add schedule
     public function add($data) {
         return $this->db->insert(
