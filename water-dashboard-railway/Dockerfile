@@ -48,20 +48,24 @@ RUN apt-get update && apt-get install -y supervisor && rm -rf /var/lib/apt/lists
 RUN mkdir -p /etc/supervisor/conf.d
 
 # Create supervisor config for PHP-FPM
-RUN echo '[program:php-fpm]
+RUN cat > /etc/supervisor/conf.d/php-fpm.conf << 'EOF'
+[program:php-fpm]
 command=/usr/local/sbin/php-fpm
 autostart=true
 autorestart=true
 stderr_logfile=/var/log/php-fpm.err.log
-stdout_logfile=/var/log/php-fpm.out.log' > /etc/supervisor/conf.d/php-fpm.conf
+stdout_logfile=/var/log/php-fpm.out.log
+EOF
 
 # Create supervisor config for Nginx
-RUN echo '[program:nginx]
+RUN cat > /etc/supervisor/conf.d/nginx.conf << 'EOF'
+[program:nginx]
 command=/usr/sbin/nginx -g "daemon off;"
 autostart=true
 autorestart=true
 stderr_logfile=/var/log/nginx.err.log
-stdout_logfile=/var/log/nginx.out.log' > /etc/supervisor/conf.d/nginx.conf
+stdout_logfile=/var/log/nginx.out.log
+EOF
 
 EXPOSE 80
 
