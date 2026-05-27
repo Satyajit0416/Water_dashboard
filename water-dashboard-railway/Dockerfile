@@ -41,7 +41,28 @@ server {
 }
 EOF
 
+# Install supervisord
+RUN apt-get update && apt-get install -y supervisor && rm -rf /var/lib/apt/lists/*
+
+# Create supervisor config directory
+RUN mkdir -p /etc/supervisor/conf.d
+
+# Create supervisor config for PHP-FPM
+RUN echo '[program:php-fpm]
+command=/usr/local/sbin/php-fpm
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/php-fpm.err.log
+stdout_logfile=/var/log/php-fpm.out.log' > /etc/supervisor/conf.d/php-fpm.conf
+
+# Create supervisor config for Nginx
+RUN echo '[program:nginx]
+command=/usr/sbin/nginx -g "daemon off;"
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/nginx.err.log
+stdout_logfile=/var/log/nginx.out.log' > /etc/supervisor/conf.d/nginx.conf
+
 EXPOSE 80
 
-# Start both PHP-FPM and Nginx
-CMD php-fpm -D && nginx -g "daemon off;"
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
