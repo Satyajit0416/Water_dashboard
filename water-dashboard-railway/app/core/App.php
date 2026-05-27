@@ -25,7 +25,7 @@ class App {
         session_set_cookie_params([
             'lifetime' => SESSION_LIFETIME,
             'path'     => '/',
-            'secure'   => false, // Set to true in production (HTTPS)
+            'secure'   => true,
             'httponly' => true,
             'samesite' => 'Strict',
         ]);

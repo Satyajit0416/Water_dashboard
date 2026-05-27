@@ -7,7 +7,7 @@ class WaterController extends Controller {
 
     // List farmer's water usage
     public function index() {
-        $this->requireAuth();
+        $this->requireFarmer();
 
         $farmerModel = $this->model('FarmerModel');
         $waterModel  = $this->model('WaterUsageModel');
@@ -169,7 +169,7 @@ class WaterController extends Controller {
 
     // AJAX: Get chart data
     public function chartData() {
-        $this->requireAuth();
+        $this->requireFarmer();
 
         $farmerModel = $this->model('FarmerModel');
         $waterModel  = $this->model('WaterUsageModel');

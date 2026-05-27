@@ -130,5 +130,5 @@ function isActive($path) {
 
 // Asset URL
 function asset($path) {
-    return APP_URL . '/../public/' . ltrim($path, '/');
+    return APP_URL . '/' . ltrim($path, '/');
 }

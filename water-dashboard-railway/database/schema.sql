@@ -116,11 +116,11 @@ CREATE TABLE IF NOT EXISTS reports (
 -- SAMPLE DATA
 -- ============================================================
 
--- Admin user (password: Admin@123)
+-- Admin user (password: password)
 INSERT INTO users (name, email, password, role) VALUES
 ('Super Admin', 'admin@waterdash.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
 
--- Farmer users (password: Farmer@123)
+-- Farmer users (password: password)
 INSERT INTO users (name, email, password, role) VALUES
 ('Rajesh Kumar', 'rajesh@farm.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'farmer'),
 ('Priya Singh', 'priya@farm.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'farmer'),

@@ -26,7 +26,7 @@ class DashboardController extends Controller {
         $stats = [
             'today_usage'     => $waterModel->getTodayUsage($farmerId),
             'month_usage'     => $waterModel->getMonthUsage($farmerId),
-            'total_usage'     => $waterModel->getTotalUsage(),
+            'total_usage'     => $waterModel->getTotalUsage($farmerId),
             'active_crops'    => $cropModel->count('farmer_id = ? AND status = ?', [$farmerId, 'active']),
             'pending_schedules' => $irrigationModel->countPending($farmerId),
         ];
