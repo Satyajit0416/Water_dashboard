@@ -9,14 +9,13 @@ define('APP_VERSION', '1.0.0');
 $_detected_url = getenv('APP_URL'); if (!$_detected_url) {     $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';     $host   = $_SERVER['HTTP_HOST'] ?? 'localhost';     $_detected_url = $scheme . '://' . $host; } define('APP_URL', rtrim($_detected_url, '/'));
 define('BASE_PATH', dirname(__DIR__));
 
-// Database Configuration — reads from Railway environment variables
-define('DB_HOST', getenv('MYSQLHOST')     ?: getenv('DB_HOST') ?: 'localhost');
-define('DB_NAME', getenv('MYSQLDATABASE') ?: getenv('DB_NAME') ?: 'water_dashboard');
-define('DB_USER', getenv('MYSQLUSER')     ?: getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('MYSQLPASSWORD') ?: getenv('DB_PASS') ?: '');
-define('DB_PORT', getenv('MYSQLPORT')     ?: '3306');
+// Database Configuration
+define('DB_HOST', 'sql12.freesqldatabase.com');
+define('DB_NAME', 'sql12827461');
+define('DB_USER', 'sql12827461');
+define('DB_PASS', 'FQX2VLXPqk');
+define('DB_PORT', '3306');
 define('DB_CHARSET', 'utf8mb4');
-
 // Session Configuration
 define('SESSION_NAME', 'water_dash_session');
 define('SESSION_LIFETIME', 3600);
