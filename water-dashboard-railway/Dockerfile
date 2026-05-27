@@ -17,7 +17,8 @@ RUN chown -R www-data:www-data /var/www/html \
 RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
 
 # Create Nginx config for Laravel
-RUN echo 'server {
+RUN cat > /etc/nginx/sites-available/default << 'EOF'
+server {
     listen 80;
     server_name _;
     root /var/www/html/public;
@@ -37,7 +38,8 @@ RUN echo 'server {
     location ~ /\.ht {
         deny all;
     }
-}' > /etc/nginx/sites-available/default
+}
+EOF
 
 EXPOSE 80
 
