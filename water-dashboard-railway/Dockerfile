@@ -1,12 +1,4 @@
-FROM php:8.2-apache
-
-# Ensure only mpm_prefork is active (mod_php is incompatible with mpm_event/mpm_worker)
-RUN rm -f /etc/apache2/mods-enabled/mpm_*.load /etc/apache2/mods-enabled/mpm_*.conf \
-    && a2enmod mpm_prefork \
-    && apache2ctl -t
-
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
+FROM php:8.2-fpm
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql
@@ -17,14 +9,37 @@ WORKDIR /var/www/html
 # Copy all project files
 COPY . /var/www/html/
 
-# Set Apache DocumentRoot to /public
-RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
-
-# Allow .htaccess overrides
-RUN echo '<Directory /var/www/html/public>\n    AllowOverride All\n    Require all granted\n</Directory>' >> /etc/apache2/sites-available/000-default.conf
-
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
+# Install Nginx
+RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
+
+# Create Nginx config for Laravel
+RUN echo 'server {
+    listen 80;
+    server_name _;
+    root /var/www/html/public;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}' > /etc/nginx/sites-available/default
+
 EXPOSE 80
+
+# Start both PHP-FPM and Nginx
+CMD php-fpm -D && nginx -g "daemon off;"
